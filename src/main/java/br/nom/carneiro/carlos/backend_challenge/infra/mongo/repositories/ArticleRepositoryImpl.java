@@ -18,6 +18,8 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Override
     public Article save(Article article) {
+        if(article.id() != null) article.modifiedNow();
+
         return mongoTemplate.save(article, COLLECTION_NAME);
     }
 

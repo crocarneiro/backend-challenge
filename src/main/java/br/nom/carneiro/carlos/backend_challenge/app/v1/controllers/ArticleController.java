@@ -48,12 +48,10 @@ public class ArticleController {
     @PutMapping("/articles/{id}")
     public ArticleModel update(@RequestBody ArticleModel requestBody, @PathVariable("id") String id) {
         var article = repository.findById(id);
-        var newArticle = ArticleModel.getArticle(requestBody);
 
+        var newArticle = ArticleModel.getArticle(requestBody);
         newArticle.id(article.id());
         newArticle.createdAt(article.createdAt());
-        newArticle.modifiedNow();
-
         newArticle = repository.save(article);
 
         return new ArticleModel(newArticle);
