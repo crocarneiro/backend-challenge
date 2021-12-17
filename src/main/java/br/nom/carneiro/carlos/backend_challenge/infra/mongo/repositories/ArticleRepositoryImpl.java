@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Repository;
 
 import br.nom.carneiro.carlos.backend_challenge.domain.article.Article;
 import br.nom.carneiro.carlos.backend_challenge.domain.article.ArticleRepository;
 
+@Repository
 public class ArticleRepositoryImpl implements ArticleRepository {
     private static String COLLECTION_NAME = "articles";
 
