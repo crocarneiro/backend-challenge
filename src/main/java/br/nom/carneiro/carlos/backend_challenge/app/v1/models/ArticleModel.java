@@ -6,6 +6,7 @@ import java.util.List;
 import br.nom.carneiro.carlos.backend_challenge.domain.article.Article;
 
 public class ArticleModel {
+    public String id;
     public String title;
     public String url;
     public String imageUrl;
@@ -16,7 +17,11 @@ public class ArticleModel {
     public List<LaunchModel> launches;
     public List<EventModel> events;
 
+    public ArticleModel() {
+    }
+
     public ArticleModel(Article article) {
+        id = article.id();
         title = article.getTitle();
         url = article.getTitle();
         imageUrl = article.getImageUrl();
@@ -30,6 +35,7 @@ public class ArticleModel {
 
     public static Article getArticle(ArticleModel model) {
         var article = new Article();
+        article.id(model.id);
         article.setTitle(model.title);
         article.setUrl(model.url);
         article.setImageUrl(model.imageUrl);

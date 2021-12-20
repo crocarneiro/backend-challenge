@@ -27,22 +27,23 @@ public class ArticlesSynchronizationService {
      */
     public void sync(ArticlesSource source) {
         System.out.println("Starting articles synchronization...");
-        var nThreads = 5; /* Number of threads synching the articles. This number is kind of random. */
+        var nThreads = 10; /* Number of threads synching the articles. This number is kind of random. */
         var skip = new AtomicLong(0); /* Variable which holds the number of records being skipped. */
         var latestSynchronizedId = new AtomicLong(0); /* Keeps the ID (from spaceflight) of the latest synchronized article. */
 
         System.out.println("Getting the total number of articles in the source...");
-        var articlesToSync = source.getNumberOfArticles(); /* Get the total number of articles to sync. */
-        System.out.println("Total number of articles in the source: " + articlesToSync);
+        var articlesOnOrigin = source.getNumberOfArticles(); /* Get the total number of articles to sync. */
+        System.out.println("Total number of articles in the source: " + articlesOnOrigin);
 
-        var step = (long)Math.ceil(articlesToSync / 5); /* Number of articles to be sync by the threads every run. */
+        var step = (long)Math.ceil(articlesOnOrigin / nThreads); /* Number of articles to be sync by the threads every run. */
 
         System.out.println("Getting information about our last articles synchronization...");
         var latestEntry = historyRepository.findLatest();
-        if(latestEntry != null)
+        if(latestEntry != null) {
             System.out.println(latestEntry.toString());
-        else
+        } else {
             System.out.println("This is the first synchronization ever.");
+        }
 
         /* Create threads (just create, not running yet). */
         var threads = new ArrayList<Thread>();
@@ -51,26 +52,25 @@ public class ArticlesSynchronizationService {
                 System.out.println("Starting new thread...");
                 System.out.println("Starting from " + skip.get());
 
-                if(skip.get() >= articlesToSync) return; /* If there is nothing more to sync, then that's it. */
+                var currentSkip = skip.getAndAdd(step);
 
-                /* If it's the first sync, then sync all the articles. If not, sync only the articles who were not synchronized yet.
-                 */
+                if(currentSkip >= articlesOnOrigin) return; /* If there is nothing more to sync, then that's it. */
+
+                /* If it's the first sync, then sync all the articles. If not, sync only the articles who were not synchronized yet. */
                 List<Article> articles = null;
                 if(latestEntry != null)
-                    articles = source.getArticlesPublishedAfter(skip.get(), step, latestEntry.getLatestSynchronizedId());
+                    articles = source.getArticlesPublishedAfter(currentSkip, step, latestEntry.getLatestSynchronizedId());
                 else
-                    articles = source.getArticles(skip.get(), step);
-
-                var next = skip.get() + articles.size();
-                skip.set(next);
+                    articles = source.getArticles(currentSkip, step);
 
                 for(var article : articles) {
                     articleRepository.save(article);
                 }
 
-                latestSynchronizedId.set(articles.get(articles.size() - 1).getOriginId());
+                if(articles.size() > 0)
+                    latestSynchronizedId.set(articles.get(articles.size() - 1).getOriginId());
 
-                System.out.println(next + " articles successfully synchronized.");
+                System.out.println(currentSkip + articles.size() + " articles successfully synchronized.");
             });
             threads.add(t);
         }

@@ -35,4 +35,10 @@ public class SyncHistoryEntryRepositoryImpl implements SyncHistoryEntryRepositor
 
         return template.findOne(query, SyncHistoryEntry.class, COLLECTION_NAME);
     }
+
+    @Override
+    public Long count() {
+        Query query = new Query();
+        return template.count(query, SyncHistoryEntry.class, COLLECTION_NAME);
+    }
 }

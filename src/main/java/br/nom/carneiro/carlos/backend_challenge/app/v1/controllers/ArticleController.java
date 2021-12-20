@@ -20,7 +20,7 @@ public class ArticleController {
     @Autowired
     private ArticleRepository repository;
 
-    @GetMapping("/articles/")
+    @GetMapping({"/articles/", "/articles"})
     public List<ArticleModel> getAll() {
         var articles = repository.findAll();
         var articlesModels = new ArrayList<ArticleModel>();
@@ -37,12 +37,12 @@ public class ArticleController {
         return new ArticleModel(article);
     }
 
-    @PostMapping("/articles/")
+    @PostMapping({"/articles/", "/articles"})
     public ArticleModel create(@RequestBody ArticleModel requestBody) {
         var article = ArticleModel.getArticle(requestBody);
         repository.save(article);
 
-        return requestBody;
+        return new ArticleModel(article);
     }
 
     @PutMapping("/articles/{id}")
@@ -52,7 +52,7 @@ public class ArticleController {
         var newArticle = ArticleModel.getArticle(requestBody);
         newArticle.id(article.id());
         newArticle.createdAt(article.createdAt());
-        newArticle = repository.save(article);
+        newArticle = repository.save(newArticle);
 
         return new ArticleModel(newArticle);
     }

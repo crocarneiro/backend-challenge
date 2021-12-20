@@ -6,4 +6,5 @@ public interface SyncHistoryEntryRepository {
     public SyncHistoryEntry save(SyncHistoryEntry syncHistoryEntry);
     public SyncHistoryEntry findLatest();
     public List<SyncHistoryEntry> findAll();
+    public Long count();
 }
