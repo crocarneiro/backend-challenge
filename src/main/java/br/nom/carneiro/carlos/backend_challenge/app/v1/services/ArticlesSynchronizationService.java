@@ -31,14 +31,14 @@ public class ArticlesSynchronizationService {
                 if(skip.get() >= articlesToSync) return; /* If there is nothing more to sync, then that's it. */
 
                 var articles = source.getBunchOfArticles(skip.get(), step);
-                var next = skip.get() + step;
+                var next = skip.get() + articles.size();
                 skip.set(next);
 
                 for(var article : articles) {
                     repository.save(article);
                 }
 
-                System.out.println("+- " + next + " articles successfully synchronized.");
+                System.out.println(next + " articles successfully synchronized.");
             });
             threads.add(t);
         }
