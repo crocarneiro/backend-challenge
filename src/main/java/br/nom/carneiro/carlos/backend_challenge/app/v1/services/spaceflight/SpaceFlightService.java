@@ -19,7 +19,7 @@ public class SpaceFlightService implements ArticlesSource {
     private static final String BASE_URL = "https://api.spaceflightnewsapi.net/v3/articles";
 
     @Override
-    public List<Article> getBunchOfArticles(Integer start, Integer amount) {
+    public List<Article> getBunchOfArticles(Long start, Long amount) {
         var result = new ArrayList<Article>();
 
         var restTemplate = new RestTemplate();
@@ -35,6 +35,18 @@ public class SpaceFlightService implements ArticlesSource {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        return result;
+    }
+
+    @Override
+    public Long getNumberOfArticles() {
+        var result = 0L;
+
+        var restTemplate = new RestTemplate();
+        var response = restTemplate.exchange(BASE_URL + "/count", HttpMethod.GET, null, String.class);
+
+        result = Long.parseLong(response.getBody());
 
         return result;
     }

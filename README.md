@@ -1,3 +1,5 @@
+This is a challenge by [Coodesh](https://coodesh.com/)
+
 ## Building the application
 To build the application just make sure you have a distribution of the JDK 17, open the root folder of the repository in your terminal and run:
 
