@@ -3,7 +3,12 @@ package br.nom.carneiro.carlos.backend_challenge.infra.mongo.repositories;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import br.nom.carneiro.carlos.backend_challenge.domain.article.Article;
@@ -31,6 +36,21 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     @Override
     public List<Article> findAll() {
         return mongoTemplate.findAll(Article.class, COLLECTION_NAME);
+    }
+
+    @Override
+    public Page<Article> findAll(int page) {
+        Pageable pageable = PageRequest.of(0, 10);
+        var query = new Query().with(pageable);
+        var articles = mongoTemplate.find(query, Article.class, COLLECTION_NAME);
+
+        Page<Article> pages = PageableExecutionUtils.getPage(
+            articles,
+            pageable,
+            () -> mongoTemplate.count(Query.of(query).limit(-1).skip(-1), Article.class, COLLECTION_NAME)
+        );
+
+        return pages;
     }
 
     @Override
