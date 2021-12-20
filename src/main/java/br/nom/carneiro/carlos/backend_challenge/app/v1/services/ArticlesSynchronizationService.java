@@ -53,8 +53,7 @@ public class ArticlesSynchronizationService {
 
                 if(skip.get() >= articlesToSync) return; /* If there is nothing more to sync, then that's it. */
 
-                /* If it's the first sync, then sync all the articles. If not, then sync only the articles
-                 * published after the last sync.
+                /* If it's the first sync, then sync all the articles. If not, sync only the articles who were not synchronized yet.
                  */
                 List<Article> articles = null;
                 if(latestEntry != null)
