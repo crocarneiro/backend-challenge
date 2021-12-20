@@ -19,11 +19,35 @@ public class SpaceFlightService implements ArticlesSource {
     private static final String BASE_URL = "https://api.spaceflightnewsapi.net/v3/articles";
 
     @Override
-    public List<Article> getBunchOfArticles(Long start, Long amount) {
-        var result = new ArrayList<Article>();
+    public List<Article> getArticles(Long start, Long amount) {
+        return findArticles(start, amount, null);
+    }
+
+    @Override
+    public List<Article> getArticlesPublishedAfter(Long start, Long amount, Long id) {
+        return findArticles(start, amount, id);
+    }
+
+    @Override
+    public Long getNumberOfArticles() {
+        var result = 0L;
 
         var restTemplate = new RestTemplate();
-        var response = restTemplate.exchange(BASE_URL + "?_start=" + start + "&_limit=" + amount, HttpMethod.GET, null, String.class);
+        var response = restTemplate.exchange(BASE_URL + "/count", HttpMethod.GET, null, String.class);
+
+        result = Long.parseLong(response.getBody());
+
+        return result;
+    }
+
+    private List<Article> findArticles(Long start, Long amount, Long id) {
+        var result = new ArrayList<Article>();
+
+        var parameters = "?_start=" + start + "&_limit=" + amount + "&_sort=id";
+        if(id != null) parameters += "&id_gt=" + id;
+
+        var restTemplate = new RestTemplate();
+        var response = restTemplate.exchange(BASE_URL + parameters, HttpMethod.GET, null, String.class);
         var objectMapper = new ObjectMapper();
 
         try {
@@ -35,18 +59,6 @@ public class SpaceFlightService implements ArticlesSource {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-        return result;
-    }
-
-    @Override
-    public Long getNumberOfArticles() {
-        var result = 0L;
-
-        var restTemplate = new RestTemplate();
-        var response = restTemplate.exchange(BASE_URL + "/count", HttpMethod.GET, null, String.class);
-
-        result = Long.parseLong(response.getBody());
 
         return result;
     }

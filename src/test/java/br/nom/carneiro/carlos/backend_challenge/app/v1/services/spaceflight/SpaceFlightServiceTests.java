@@ -15,7 +15,7 @@ public class SpaceFlightServiceTests {
     @Test
     @Disabled
     void shouldJustRun() {
-        for(var article:underTest.getBunchOfArticles(11606L, 10L)) {
+        for(var article:underTest.getArticles(11606L, 10L)) {
             System.out.println(article.getTitle());
         }
     }

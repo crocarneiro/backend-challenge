@@ -6,6 +6,7 @@ import java.util.List;
 import br.nom.carneiro.carlos.backend_challenge.domain.Entity;
 
 public class Article extends Entity {
+    private Long originId;
     private String title;
     private String url;
     private String imageUrl;
@@ -15,6 +16,14 @@ public class Article extends Entity {
     private Boolean featured;
     private List<Launch> launches;
     private List<Event> events;
+
+    public Long getOriginId() {
+        return originId;
+    }
+
+    public void setOriginId(Long originId) {
+        this.originId = originId;
+    }
 
     public String getTitle() {
         return title;

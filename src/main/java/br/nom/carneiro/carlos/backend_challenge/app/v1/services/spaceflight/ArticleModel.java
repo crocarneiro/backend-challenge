@@ -6,7 +6,7 @@ import java.util.List;
 import br.nom.carneiro.carlos.backend_challenge.domain.article.Article;
 
 public class ArticleModel {
-    public Integer id;
+    public Long id;
     public String title;
     public String url;
     public String imageUrl;
@@ -23,6 +23,7 @@ public class ArticleModel {
 
     public static Article getArticle(ArticleModel model) {
         var article = new Article();
+        article.setOriginId(model.id);
         article.setTitle(model.title);
         article.setUrl(model.url);
         article.setImageUrl(model.imageUrl);
