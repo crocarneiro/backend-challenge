@@ -2,21 +2,19 @@ package br.nom.carneiro.carlos.backend_challenge.app.v1.services.spaceflight;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import br.nom.carneiro.carlos.backend_challenge.domain.article.Article;
 import br.nom.carneiro.carlos.backend_challenge.domain.article.ArticlesSource;
 
 @Service
 public class SpaceFlightService implements ArticlesSource {
     private static final String BASE_URL = "https://api.spaceflightnewsapi.net/v3/articles";
+    private static final String SOURCE_NAME = "Space Flight";
 
     @Override
     public List<Article> getArticles(Long start, Long amount) {
@@ -54,12 +52,19 @@ public class SpaceFlightService implements ArticlesSource {
             List<ArticleModel> articlesModels = objectMapper.readValue(response.getBody(), new TypeReference<List<ArticleModel>>() {});
 
             for(var articleModel : articlesModels) {
-                result.add(ArticleModel.getArticle(articleModel));
+                var article = ArticleModel.getArticle(articleModel);
+                article.setSourceName(this.getSourceName());
+                result.add(article);
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         return result;
+    }
+
+    @Override
+    public String getSourceName() {
+        return SOURCE_NAME;
     }
 }

@@ -116,4 +116,28 @@ public class ArticleRepositoryImplTests {
 
         assertNull(repository.findById(article.id()));
     }
+
+    @Test
+    void shouldCountBySourceName() {
+        var article1 = new Article();
+        article1.setSourceName("Space Flight");
+        repository.save(article1);
+
+        var article2 = new Article();
+        article2.setSourceName("Space Flight");
+        repository.save(article2);
+
+        var article3 = new Article();
+        article3.setSourceName("Space Flight");
+        repository.save(article3);
+
+        var article4 = new Article();
+        article4.setSourceName("Random Source");
+        repository.save(article4);
+
+        var expected = 3L;
+        var actual = repository.countBySourceName("Space Flight");
+
+        assertEquals(expected, actual);
+    }
 }

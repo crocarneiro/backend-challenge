@@ -6,4 +6,5 @@ public interface ArticlesSource {
     public List<Article> getArticles(Long start, Long amount);
     public List<Article> getArticlesPublishedAfter(Long start, Long amount, Long id);
     public Long getNumberOfArticles();
+    public String getSourceName();
 }

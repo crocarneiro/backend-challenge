@@ -35,7 +35,17 @@ public class ArticlesSynchronizationService {
         var articlesOnOrigin = source.getNumberOfArticles(); /* Get the total number of articles to sync. */
         System.out.println("Total number of articles in the source: " + articlesOnOrigin);
 
-        var step = (long)Math.ceil(articlesOnOrigin / nThreads); /* Number of articles to be sync by the threads every run. */
+        System.out.println("Getting the total number of articles from this source in our database...");
+        var articlesFromOrigin = articleRepository.countBySourceName(source.getSourceName());
+        System.out.println("Total number of articles from the source in our database: " + articlesFromOrigin);
+
+        System.out.println("Calculating the number of articles with syncle pending...");
+        var articlesPending = articlesOnOrigin - articlesFromOrigin;
+        System.out.println("Number of articles with sync pending: " + articlesPending);
+        skip.set(articlesFromOrigin);
+
+        var step = (long)Math.ceil(articlesOnOrigin / nThreads) + 1; /* Number of articles to be sync by the threads every run. */
+        System.out.println("Each thread will sync " + step + " articles.");
 
         System.out.println("Getting information about our last articles synchronization...");
         var latestEntry = historyRepository.findLatest();
@@ -50,18 +60,10 @@ public class ArticlesSynchronizationService {
         for(int i = 0; i < nThreads; i++) {
             var t = new Thread(() -> {
                 System.out.println("Starting new thread...");
-                System.out.println("Starting from " + skip.get());
-
                 var currentSkip = skip.getAndAdd(step);
 
-                if(currentSkip >= articlesOnOrigin) return; /* If there is nothing more to sync, then that's it. */
-
-                /* If it's the first sync, then sync all the articles. If not, sync only the articles who were not synchronized yet. */
-                List<Article> articles = null;
-                if(latestEntry != null)
-                    articles = source.getArticlesPublishedAfter(currentSkip, step, latestEntry.getLatestSynchronizedId());
-                else
-                    articles = source.getArticles(currentSkip, step);
+                System.out.println("Synchronization will start from article " + currentSkip);
+                var articles = source.getArticles(currentSkip, step);
 
                 for(var article : articles) {
                     articleRepository.save(article);

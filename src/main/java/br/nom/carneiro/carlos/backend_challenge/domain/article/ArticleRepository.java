@@ -10,4 +10,5 @@ public interface ArticleRepository {
     public List<Article> findAll();
     public Page<Article> findAll(int page);
     public void delete(Article article);
+    public Long countBySourceName(String sourceName);
 }

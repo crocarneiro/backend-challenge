@@ -7,6 +7,7 @@ import br.nom.carneiro.carlos.backend_challenge.domain.Entity;
 
 public class Article extends Entity {
     private Long originId;
+    private String sourceName;
     private String title;
     private String url;
     private String imageUrl;
@@ -23,6 +24,14 @@ public class Article extends Entity {
 
     public void setOriginId(Long originId) {
         this.originId = originId;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
     }
 
     public String getTitle() {

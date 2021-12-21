@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
@@ -56,5 +57,13 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     @Override
     public void delete(Article article) {
         mongoTemplate.remove(article, COLLECTION_NAME);
+    }
+
+    @Override
+    public Long countBySourceName(String sourceName) {
+        var query = new Query();
+        query.addCriteria(Criteria.where("sourceName").is(sourceName));
+
+        return mongoTemplate.count(Query.of(query), Article.class, COLLECTION_NAME);
     }
 }
