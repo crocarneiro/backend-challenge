@@ -37,7 +37,7 @@ mvn package
 Once you have a valid build of the the application you can run it with the following command:
 
 ```sh
-java -jar backend_challenge-0.0.1-SNAPSHOT.jar
+java -jar backend_challenge-0.0.1-SNAPSHOT.jar # The .jar name may change
 ```
 
 This application works with two profiles: "production" and "dev". The default profile is "production", so before running the application you have to set the environment variable "MONGO_DATABASE_URL" with the URL connection of your MongoDB instance.
@@ -54,7 +54,7 @@ set MONGO_DATABASE_URL={your_URL_here}
 
 To run the application in a development environment run the following command:
 ```sh
-java -jar -Dspring.profiles.active=dev backend_challenge-0.0.1-SNAPSHOT.jar # You may change the jar name according to the version
+java -jar -Dspring.profiles.active=dev backend_challenge-0.0.1-SNAPSHOT.jar # The .jar name may change
 ```
 
 If you have the env variable `MONGO_DATABASE_URL` set, then the application will connect to this database, otherwise it will start a Mongo Container by itself and use it.
