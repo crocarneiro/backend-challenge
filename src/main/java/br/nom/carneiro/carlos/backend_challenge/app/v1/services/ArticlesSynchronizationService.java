@@ -63,14 +63,16 @@ public class ArticlesSynchronizationService {
                 System.out.println("Synchronization will start from article " + currentSkip);
                 var articles = source.getArticles(currentSkip, step);
 
-                for(var article : articles) {
-                    articleRepository.save(article);
-                }
+                articles.parallelStream().forEach(article -> articleRepository.save(article));
 
-                if(articles.size() > 0)
+                if(articles.size() > 0) {
                     latestSynchronizedId.set(articles.get(articles.size() - 1).getOriginId());
-
-                System.out.println(currentSkip + articles.size() + " articles successfully synchronized.");
+                    System.out.println(currentSkip + articles.size() + " articles successfully synchronized.");
+                }
+                else {
+                    System.out.println("Nothing new to synchronize.");
+                    return;
+                }
             });
             threads.add(t);
         }
