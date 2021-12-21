@@ -13,6 +13,9 @@ This application is an API for updating and consuming a database with articles a
 ## Demo
 You can test the API in our [online Swagger UI](https://crocarneiro-backend-challenge.herokuapp.com/swagger-ui.html).
 
+## Presentation
+I talk a little bit about this application in this video right here: [https://www.loom.com/share/aacf4b7e800742cbbd48faa8a08f9177](https://www.loom.com/share/aacf4b7e800742cbbd48faa8a08f9177).
+
 ## Running the application with Docker Compose
 Open a terminal session, navigate to the Docker folder in this directory and run the following command:
 ```sh
