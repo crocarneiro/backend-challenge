@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.nom.carneiro.carlos.backend_challenge.app.v1.models.ArticleModel;
@@ -20,13 +21,8 @@ public class ArticleController {
     private ArticleRepository repository;
 
     @GetMapping({"/articles/", "/articles"})
-    public Page<ArticleModel> getAll() {
-        var articles = repository.findAll();
-        var articlesModels = new ArrayList<ArticleModel>();
-        for(var article : articles)
-            articlesModels.add(new ArticleModel(article));
-
-        return repository.findAll(0).map((article) -> new ArticleModel(article));
+    public Page<ArticleModel> getAll(@RequestParam("page") int page) {
+        return repository.findAll(page).map((article) -> new ArticleModel(article));
     }
 
     @GetMapping("/articles/{id}")
