@@ -1,6 +1,5 @@
 package br.nom.carneiro.carlos.backend_challenge.app.v1.controllers;
 
-import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -1,11 +1,9 @@
 package br.nom.carneiro.carlos.backend_challenge.app.v1.services;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.nom.carneiro.carlos.backend_challenge.domain.article.Article;
 import br.nom.carneiro.carlos.backend_challenge.domain.article.ArticleRepository;
 import br.nom.carneiro.carlos.backend_challenge.domain.article.ArticlesSource;
 import br.nom.carneiro.carlos.backend_challenge.domain.sync_history.SyncHistoryEntry;
