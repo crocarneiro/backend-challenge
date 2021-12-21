@@ -41,7 +41,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Override
     public Page<Article> findAll(int page) {
-        Pageable pageable = PageRequest.of(0, 10);
+        Pageable pageable = PageRequest.of(page, 10);
         var query = new Query().with(pageable);
         var articles = mongoTemplate.find(query, Article.class, COLLECTION_NAME);
 

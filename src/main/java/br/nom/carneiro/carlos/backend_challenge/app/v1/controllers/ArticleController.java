@@ -21,8 +21,8 @@ public class ArticleController {
     private ArticleRepository repository;
 
     @GetMapping({"/articles/", "/articles"})
-    public Page<ArticleModel> getAll(@RequestParam("page") int page) {
-        return repository.findAll(page).map((article) -> new ArticleModel(article));
+    public Page<ArticleModel> getAll(@RequestParam(name = "page", required = false) Integer page) {
+        return repository.findAll((page == null) ? 0 : page).map((article) -> new ArticleModel(article));
     }
 
     @GetMapping("/articles/{id}")
