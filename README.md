@@ -14,7 +14,7 @@ This application is an API for updating and consuming a database with articles a
 You can test the API in our online Swagger UI: ......................................
 
 ## Running the application with Docker Compose
-Open a terminal session, navigate to the Docker folder of this directory and run the following command:
+Open a terminal session, navigate to the Docker folder in this directory and run the following command:
 ```sh
 docker-compose up
 ```
@@ -26,11 +26,7 @@ You can download the jar file from one of the releases: [https://github.com/croc
 
 Or you can build the application yourself.
 
-### Building with Docker
-......................................
-
-
-### Building with Maven
+### Building
 To build the application just make sure you have a distribution of the JDK 17 and the latest Maven version installed, then open the root folder of the repository in your terminal and run:
 
 ```sh
