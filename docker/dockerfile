@@ -1,0 +1,4 @@
+FROM amazoncorretto:17
+
+RUN yum install -y wget
+RUN wget -O /opt/backend_challenge.jar https://github.com/crocarneiro/backend-challenge/releases/download/v1.0.0/backend_challenge-1.0.0.jar

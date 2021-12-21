@@ -1,0 +1,16 @@
+services:
+  database:
+    image: mongo:4.4.4
+    ports:
+      - 27017:27017
+
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+  backend:
+    build: .
+    environment:
+      - MONGO_DATABASE_URL=mongodb://root:root@172.17.0.1:27017/admin
+    ports:
+      - 8080:8080
+    command: java -jar /opt/backend_challenge.jar
