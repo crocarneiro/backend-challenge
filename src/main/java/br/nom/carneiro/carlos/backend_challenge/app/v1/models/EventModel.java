@@ -12,6 +12,9 @@ public class EventModel {
 
     public static List<EventModel> eventsFromArticle(Article article) {
         var list = new ArrayList<EventModel>();
+
+        if(article.getEvents() == null) return list;
+
         for(var event : article.getEvents()) {
             var eventModel = new EventModel();
             eventModel.id = event.getId();

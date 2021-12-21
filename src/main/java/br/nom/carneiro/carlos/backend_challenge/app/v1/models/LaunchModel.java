@@ -12,6 +12,9 @@ public class LaunchModel {
 
     public static List<LaunchModel> launchesFromArticle(Article article) {
         var list = new ArrayList<LaunchModel>();
+
+        if(article.getLaunches() == null) return list;
+
         for(var launch : article.getLaunches()) {
             var launchModel = new LaunchModel();
             launchModel.id = launch.getId();

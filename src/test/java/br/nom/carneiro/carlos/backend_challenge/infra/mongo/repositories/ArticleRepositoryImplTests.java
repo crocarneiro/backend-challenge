@@ -1,6 +1,5 @@
 package br.nom.carneiro.carlos.backend_challenge.infra.mongo.repositories;
 
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
