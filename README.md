@@ -11,7 +11,7 @@ This application is an API for updating and consuming a database with articles a
 ![](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
 ## Demo
-You can test the API in our online Swagger UI: ......................................
+You can test the API in our [online Swagger UI](https://crocarneiro-backend-challenge.herokuapp.com/swagger-ui.html).
 
 ## Running the application with Docker Compose
 Open a terminal session, navigate to the Docker folder in this directory and run the following command:
