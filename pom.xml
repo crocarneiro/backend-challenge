@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.nom.carneiro.carlos</groupId>
 	<artifactId>backend_challenge</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>backend_challenge</name>
 	<description>Back-end Challenge 2021 🏅 - Space Flight News</description>
 	<properties>
